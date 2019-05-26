@@ -67,7 +67,7 @@ public class HideCommand extends SubCommandAbst {
      * 使用方法に関するメッセージをsenderに送信します。
      * @param sender コマンド実行者
      * @param label 実行ラベル
-     * @see com.github.ucchyocean.lc.command.SubCommandAbst#sendUsageMessage()
+     * @see com.github.ucchyocean.lc.command.SubCommandAbst#sendUsageMessage(org.bukkit.command.CommandSender, java.lang.String)
      */
     @Override
     public void sendUsageMessage(
@@ -82,7 +82,7 @@ public class HideCommand extends SubCommandAbst {
      * @param label 実行ラベル
      * @param args 実行時の引数
      * @return コマンドが実行されたかどうか
-     * @see com.github.ucchyocean.lc.command.SubCommandAbst#runCommand(java.lang.String[])
+     * @see com.github.ucchyocean.lc.command.SubCommandAbst#runCommand(org.bukkit.command.CommandSender, java.lang.String, java.lang.String[])
      */
     @Override
     public boolean runCommand(
@@ -102,11 +102,8 @@ public class HideCommand extends SubCommandAbst {
             if ( def != null ) {
                 cname = def.getName();
             }
-        } else if ( args.length >= 2 ) {
-            cname = args[1];
         } else {
-            sendResourceMessage(sender, PREERR, "errmsgCommand");
-            return true;
+            cname = args[1];
         }
 
         // 指定されたコマンドが「/ch hide list」なら、リストを表示して終了

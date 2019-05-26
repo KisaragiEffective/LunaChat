@@ -10,6 +10,7 @@ https://github.com/KisaragiEffective/LunaChat/releases
 
 コマンドリファレンスや、設定リファレンスは、こちらから
 https://github.com/KisaragiEffective/LunaChat/wiki/Commands
+
 https://github.com/KisaragiEffective/LunaChat/wiki/Config
 
 本プラグインのライセンスは、LGPLv3に従います。ライセンス条文は下記を参照。

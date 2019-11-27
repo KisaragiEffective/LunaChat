@@ -148,7 +148,7 @@ public class ChannelImpl extends Channel {
         LunaChatChannelChatEvent event =
                 new LunaChatChannelChatEvent(getName(), player,
                         preReplaceMessage, maskedMessage, msgFormat);
-        Bukkit.getServer().getPluginManager().callEvent(event);
+        Utility.callEventSync(event);
         if ( event.isCancelled() ) {
             return;
         }
@@ -200,7 +200,7 @@ public class ChannelImpl extends Channel {
         }
 
         // NGワード発言者に、NGワードアクションを実行する
-        if ( isNG && player != null ) {
+        if ( isNG ) {
             if ( config.getNgwordAction() == NGWordAction.BAN ) {
                 // BANする
 
@@ -414,7 +414,7 @@ public class ChannelImpl extends Channel {
         LunaChatChannelMessageEvent event =
                 new LunaChatChannelMessageEvent(
                         getName(), player, message, recipients, name, originalMessage);
-        Bukkit.getPluginManager().callEvent(event);
+        Utility.callEventSync(event);
         message = event.getMessage();
         recipients = event.getRecipients();
 

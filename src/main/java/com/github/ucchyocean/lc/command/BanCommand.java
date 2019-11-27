@@ -77,12 +77,6 @@ public class BanCommand extends SubCommandAbst {
     public boolean runCommand(
             CommandSender sender, String label, String[] args) {
 
-        // プレイヤーでなければ終了する
-        if (!(sender instanceof Player)) {
-            sendResourceMessage(sender, PREERR, "errmsgIngame");
-            return true;
-        }
-
         // 実行引数から、BANするユーザーを取得する
         String kickedName = "";
         if (args.length >= 2) {
@@ -92,9 +86,16 @@ public class BanCommand extends SubCommandAbst {
             return true;
         }
 
-        // デフォルト参加チャンネルを取得、取得できない場合はエラー表示して終了する
-        Player kicker = (Player) sender;
-        Channel channel = api.getDefaultChannel(kicker.getName());
+        // 対象チャンネルを取得、取得できない場合はエラー表示して終了する
+        Channel channel = null;
+        boolean isSpecifiedChannel = false;
+        if (args.length >= 3) {
+            channel = api.getChannel(args[2]);
+            isSpecifiedChannel = true;
+        } else if (sender instanceof Player) {
+            Player kicker = (Player) sender;
+            channel = api.getDefaultChannel(kicker.getName());
+        }
         if (channel == null) {
             sendResourceMessage(sender, PREERR, "errmsgNoJoin");
             return true;
@@ -127,7 +128,7 @@ public class BanCommand extends SubCommandAbst {
 
         // 期限付きBANの場合、期限の指定が正しいかどうかをチェックする
         int expireMinutes = -1;
-        if (args.length >= 3) {
+        if (args.length >= 3 && !isSpecifiedChannel) {
             if ( !args[2].matches("[0-9]+") ) {
                 sendResourceMessage(sender, PREERR, "errmsgInvalidBanExpireParameter");
                 return true;
